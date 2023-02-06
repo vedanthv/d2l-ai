@@ -109,31 +109,31 @@ In general, for xaverages of repeated events (like coin tosses), as the number o
 
 **Bayes Theorum**
 
-<img src = "D:\data-science\04-Deep Learning\D2L\bayes.JPG">
+![bayes](https://user-images.githubusercontent.com/44313631/217043576-c4a4ef49-7ea3-4187-acfe-6635cb58f906.JPG)
 
 **Expectation**
 
-<img src = "D:\data-science\04-Deep Learning\D2L\expectation.JPG">
+![expectation](https://user-images.githubusercontent.com/44313631/217043619-b084f9f1-3378-4a8a-b21b-99fd5921b884.JPG)
 
 **Standard Deviation**
 
-<img src = "D:\data-science\04-Deep Learning\D2L\stddev.JPG">
+![stddev](https://user-images.githubusercontent.com/44313631/217043651-dc6c6685-3423-473d-857e-f637967cdb7f.JPG)
 
 **Covariance**
 
-<img src = "D:\data-science\04-Deep Learning\D2L\covariance.JPG">
+![covariance](https://user-images.githubusercontent.com/44313631/217043673-6c356d9e-c9e7-4bcd-8eb1-d691dba6e6f9.JPG)
 
 ### Chapter 3 : Linear Neural Networks
 
 **Linear Regression Loss Function**
 
-<img src = "D:\data-science\04-Deep Learning\D2L\linreg.JPG">
+![linreg](https://user-images.githubusercontent.com/44313631/217043706-274063d4-0fc1-4bac-9faf-99424b180b26.JPG)
 
 **Mini Batch Gradient Descent**
 
-<img src = "D:\data-science\04-Deep Learning\D2L\minibatch.JPG">
+![minibatch](https://user-images.githubusercontent.com/44313631/217043739-096b05ca-c63a-44ae-889c-8f57bf1e34c5.JPG)
 
 **Likelihood Estimation**
 
-<img src = "D:\data-science\04-Deep Learning\D2L\likelihood.JPG">
+![likelihood](https://user-images.githubusercontent.com/44313631/217043776-1a9c4f6c-bbfc-44a8-aa3c-e1783bf78c4f.JPG)
 
