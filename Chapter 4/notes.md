@@ -1,0 +1,88 @@
+## Chapter 4 : Classification
+
+**Softmax Function**
+Assuming a suitable loss function, we could try, directly, to minimize the difference between and the labels. While it turns out that treating classification as a vector-valued regression problem works surprisingly well, it is nonetheless lacking in the following ways:
+
+There is no guarantee that the outputs sum up to in the way we expect probabilities to behave.
+There is no guarantee that the outputs are even nonnegative, even if their outputs sum up to ,or that they do not exceed.
+
+Another way to accomplish this goal (and to ensure nonnegativity) is to use an exponential function 
+```math
+P(y = i) \propto \exp o_i
+```
+This does indeed satisfy the requirement that the conditional class probability increases with increasing, it is monotonic, and all probabilities are nonnegative. 
+
+We can then transform these values so that they add up to 1 by dividing each by their sum. This process is called normalization.
+
+```math
+\hat{\mathbf{y}} = \mathrm{softmax}(\mathbf{o}) \quad \text{where}\quad \hat{y}_i = \frac{\exp(o_i)}{\sum_j \exp(o_j)}.
+```
+
+This formula demonstrates exponential normalization
+
+We don't need to calculate the softmax for the function for which the probability is the highest
+
+```math
+\operatorname*{argmax}_j \hat y_j = \operatorname*{argmax}_j o_j.
+```
+**Vectorization**
+We vectorize the calculations in batches of data.
+
+```math
+\begin{split}\begin{aligned} \mathbf{O} &= \mathbf{X} \mathbf{W} + \mathbf{b}, \\ \hat{\mathbf{Y}} & = \mathrm{softmax}(\mathbf{O}). \end{aligned}\end{split}
+```
+This process of batching accelerates the calculation of XW. The complete operation can be calculated rowwise since each row represents one example.
+
+**Loss Function**
+The softmax function gives us y^ which can be estimated as the probabilities of each class. y1^ is essentially P(y = cat/x)
+
+In the following we assume that for a dataset with features X and the labels Y are represented using a one-hot encoding label vector.
+
+```math
+P(\mathbf{Y} \mid \mathbf{X}) = \prod_{i=1}^n P(\mathbf{y}^{(i)} \mid \mathbf{x}^{(i)}).
+```
+
+Let's take the negative log likelihood of the term so that finding the minima is easier. 
+
+```math
+-\log P(\mathbf{Y} \mid \mathbf{X}) = \sum_{i=1}^n -\log P(\mathbf{y}^{(i)} \mid \mathbf{x}^{(i)})
+= \sum_{i=1}^n l(\mathbf{y}^{(i)}, \hat{\mathbf{y}}^{(i)}),
+```
+
+**Loss Function**
+```math
+l(\mathbf{y}, \hat{\mathbf{y}}) = - \sum_{j=1}^q y_j \log \hat{y}_j.
+```
+The above function is called cross entropy loss.
+
+For all but one value of q the cross entropy loss becomes 0.
+
+There can be no entry with prob as 1 because then the error becomes infinity. The correspoding o value for t = 1 is inifinity
+
+Plugging in log likelihood value in the loss function we get
+
+```math
+\begin{split}\begin{aligned}
+l(\mathbf{y}, \hat{\mathbf{y}}) &=  - \sum_{j=1}^q y_j \log \frac{\exp(o_j)}{\sum_{k=1}^q \exp(o_k)} \\
+&= \sum_{j=1}^q y_j \log \sum_{k=1}^q \exp(o_k) - \sum_{j=1}^q y_j o_j \\
+&= \log \sum_{k=1}^q \exp(o_k) - \sum_{j=1}^q y_j o_j.
+\end{aligned}\end{split}
+```
+Now calucate the derivative of above function with actually o value output
+
+```math
+\partial_{o_j} l(\mathbf{y}, \hat{\mathbf{y}}) = \frac{\exp(o_j)}{\sum_{k=1}^q \exp(o_k)} - y_j = \mathrm{softmax}(\mathbf{o})_j - y_j.
+```
+In other words, the derivative is the difference between the probability assigned by our model, as expressed by the softmax operation, and what actually happened, as expressed by elements in the one-hot label vector. In this sense, it is very similar to what we saw in regression, where the gradient was the difference between the observation and estimate. 
+
+This is not coincidence. In any exponential family model, the gradients of the log-likelihood are given by precisely this term. This fact makes computing gradients easy in practice.
+
+**Information Theory Basics**
+
+Deals with the encoding,decoding,transmitting and manipulating information.
+
+1. Entropy - randomness in the data
+```math
+H[P] = \sum_j - P(j) \log P(j).
+```
+
