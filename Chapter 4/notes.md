@@ -200,3 +200,11 @@ There are two areas where Machine Learning Engineers do not concentrate on :
 Sometimes the ML Models perform very well on test dataset but fail in real deployed environments where the distribution of the model is different.
 
 By not gauging the environment, we may break the model.
+
+**Types of Distribution Shift**
+
+**Covariate Shift**
+
+The labels of a certain training set may change over time and this is called covariate shift. Covariate shift occurs due to change in the distribution of the dataset.
+
+Eg : Train Data may consist of real cat and dog images whereas the test data may have cartoon images.
