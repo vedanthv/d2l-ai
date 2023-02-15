@@ -190,3 +190,13 @@ The central question of learning has thus historically been framed as a tradeoff
 
 A central question in learning theory has been to develop the appropriate mathematical analysis to quantify where a model sits along this spectrum, and to provide the associated guarantees.
 
+**Environmental And Distribution Shift**
+
+There are two areas where Machine Learning Engineers do not concentrate on : 
+
+- Where does the data for the models come from?
+- What do we do with the conclusions that we arrive at from the mode?
+
+Sometimes the ML Models perform very well on test dataset but fail in real deployed environments where the distribution of the model is different.
+
+By not gauging the environment, we may break the model.
