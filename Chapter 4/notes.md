@@ -139,3 +139,24 @@ But often the min value of n is very large so we use previous solutions on examp
 ```math
 \epsilon_\mathcal{D}(f) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(f(\mathbf{x}^{(i)}) \neq y^{(i)}).
 ```
+
+**Population Error**
+
+The probability density function of the expected fraction of examples in the underlying population that is not of the correct labels.
+
+```math
+\epsilon(f) =  E_{(\mathbf{x}, y) \sim P} \mathbf{1}(f(\mathbf{x}) \neq y) =
+\int\int \mathbf{1}(f(\mathbf{x}) \neq y) p(\mathbf{x}, y) \;d\mathbf{x} dy.
+```
+
+Since its not possible to consider the whole population, we consider only the sample from the test set and the population space error is equivalent to the sample error. 
+
+An important classical result from probability theory called the central limit theorem guarantees that whenever we possess random samples a1,a2...an drawn from any distribution with mean <i>mu</i> and standard deviation mu/root(n), as the number of samples approaches infinity, the sample average approximately tends towards a normal distribution centered at the true mean and with standard deviation.
+
+The sample error approaches the population error with a rate of O(1/root(n))
+
+Variance is highest when the true error is 0.5 and lower when its close to 0 or 1.
+
+If we want the test set error to be approximately equal to the population error, then we must take approximately 2500 samples if we want to fit the data in approximately 95% of std dev 1
+
+If we want to fit two standard deviations with cf of 95% then we need 10000 samples.
