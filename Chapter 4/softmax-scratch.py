@@ -47,3 +47,8 @@ data = d2l.FashionMNIST(batch_size=256)
 model = SoftmaxRegressionScratch(num_inputs=784, num_outputs=10, lr=0.1)
 trainer = d2l.Trainer(max_epochs=10)
 trainer.fit(model, data)
+
+# Prediction
+X,y = next(iter(data.val_dataloader()))
+preds = model(X).argmax(axis = 1)
+print(preds.shape)
