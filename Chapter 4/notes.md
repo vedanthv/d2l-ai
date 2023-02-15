@@ -160,3 +160,33 @@ Variance is highest when the true error is 0.5 and lower when its close to 0 or 
 If we want the test set error to be approximately equal to the population error, then we must take approximately 2500 samples if we want to fit the data in approximately 95% of std dev 1
 
 If we want to fit two standard deviations with cf of 95% then we need 10000 samples.
+
+**Test Set Reuse**
+
+Let's say a model F1 is built and we need to test it.
+
+Knowing just how confident you need to be in the performance of your classifier’s error rate you apply our analysis above to determine an appropriate number of examples to set aside for the test set.
+
+ Finally you evaluate your model 
+ on the test set and report an unbiased estimate of the population error with an associated confidence interval.
+
+So far everything seems to be going well. However, that night you wake up at 3am with a brilliant idea for a new modeling approach. The next day, you code up your new model, tune its hyperparameters on the validation set and not only are you getting your new model F2 to work but it is error rate appears to be much lower than’s. However, the thrill of discovery suddenly fades as you prepare for the final evaluation. You do not have a test set!
+
+When evaluating multiple models, ensuring that Err(Sample) + Err(Population) is atmost 0.01 is hard. Before on one model we could have been sure that this probability is 95% but with many classfiers in the mix, at least one of them may be a misleading score.
+
+Once information from the test set has leaked to the modeler, it can never be a true test set again in the strictest sense. This problem is called adaptive overfitting and has recently emerged as a topic of intense interest to learning theorists and statisticians
+
+We cant take multiple test sets for multiple hypothesis testing since the dataset may be small. 
+
+**Statistical Learning Theory**
+
+Test set tells us the post hoc analysis of testing but never about any priori that may tell us how to generalize.
+
+The field of statistical learning theory aims to do exactly this.
+
+In a sense the class of memorizers is too flexible. No such a uniform convergence result could possibly hold. On the other hand, a fixed classifier is useless—it generalizes perfectly, but fits neither the training data nor the test data. 
+
+The central question of learning has thus historically been framed as a tradeoff between more flexible (higher variance) model classes that better fit the training data but risk overfitting, versus more rigid (higher bias) model classes that generalize well but risk underfitting. 
+
+A central question in learning theory has been to develop the appropriate mathematical analysis to quantify where a model sits along this spectrum, and to provide the associated guarantees.
+
