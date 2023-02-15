@@ -42,3 +42,8 @@ def cross_entropy(y_hat,y):
 def loss(self, y_hat, y):
     return cross_entropy(y_hat, y)
 
+# Training
+data = d2l.FashionMNIST(batch_size=256)
+model = SoftmaxRegressionScratch(num_inputs=784, num_outputs=10, lr=0.1)
+trainer = d2l.Trainer(max_epochs=10)
+trainer.fit(model, data)
