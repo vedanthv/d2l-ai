@@ -52,3 +52,9 @@ trainer.fit(model, data)
 X,y = next(iter(data.val_dataloader()))
 preds = model(X).argmax(axis = 1)
 print(preds.shape)
+
+wrong = preds.type(y.dtype) != y
+X, y, preds = X[wrong], y[wrong], preds[wrong]
+
+labels = [a+'\n'+b for a,b in zip(data.text_labels(y),data.text_labels(preds))]
+data.visualize([X,y],labels = labels)
