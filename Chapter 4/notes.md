@@ -105,3 +105,23 @@ H(P, Q) \stackrel{\mathrm{def}}{=} \sum_j - P(j) \log Q(j)
 ```
 
 The lowest possible Cross Entropy is when P = Q. The cross entropy is H(P,P) = H(P)
+
+**Log Sum Exp Trick**
+<img src = "D:\data-science\04-Deep Learning\D2L\images\logsumexp-1.JPG">
+
+The value oj-o' is less than 0 for all j.
+
+For a q class interval the denominator is in the range [1,j]
+
+The numerator never exceeds 1 so we can ensure overflow is not there.
+
+Nonetheless, a few steps down the road we might find ourselves in trouble when we want to compute log y as log 0. In particular, in backpropagation, we might find ourselves faced with a screenful of the dreaded NaN (Not a Number) results.
+
+But since we take the log during cross entropy calculation, we divert this error.
+
+```math
+\log \hat{y}_j =
+\log \frac{\exp(o_j - \bar{o})}{\sum_k \exp (o_k - \bar{o})} =
+o_j - \bar{o} - \log \sum_k \exp (o_k - \bar{o}).
+```
+This avoids both overflow and underflow. We will want to keep the conventional softmax function handy in case we ever want to evaluate the output probabilities by our model.
