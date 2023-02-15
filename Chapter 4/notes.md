@@ -125,3 +125,17 @@ But since we take the log during cross entropy calculation, we divert this error
 o_j - \bar{o} - \log \sum_k \exp (o_k - \bar{o}).
 ```
 This avoids both overflow and underflow. We will want to keep the conventional softmax function handy in case we ever want to evaluate the output probabilities by our model.
+
+**Generalization**
+
+For any given model we can generate a priori
+
+This priori specifies a error threshold epsilon that needs some n number of samples to keep the error below epsilon. 
+
+But often the min value of n is very large so we use previous solutions on example solutions to come up with a post hoc analysis.
+
+**Emperical Error on the Test Set**
+
+```math
+\epsilon_\mathcal{D}(f) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(f(\mathbf{x}^{(i)}) \neq y^{(i)}).
+```
