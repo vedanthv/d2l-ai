@@ -189,3 +189,141 @@ In a sense the class of memorizers is too flexible. No such a uniform convergenc
 The central question of learning has thus historically been framed as a tradeoff between more flexible (higher variance) model classes that better fit the training data but risk overfitting, versus more rigid (higher bias) model classes that generalize well but risk underfitting. 
 
 A central question in learning theory has been to develop the appropriate mathematical analysis to quantify where a model sits along this spectrum, and to provide the associated guarantees.
+
+**Environmental And Distribution Shift**
+
+There are two areas where Machine Learning Engineers do not concentrate on : 
+
+- Where does the data for the models come from?
+- What do we do with the conclusions that we arrive at from the mode?
+
+Sometimes the ML Models perform very well on test dataset but fail in real deployed environments where the distribution of the model is different.
+
+By not gauging the environment, we may break the model.
+
+**Types of Distribution Shift**
+
+**Covariate Shift**
+
+The labels of a certain training set may change over time and this is called covariate shift. Covariate shift occurs due to change in the distribution of the dataset.
+
+Eg : Train Data may consist of real cat and dog images whereas the test data may have cartoon images.
+
+**Label Shift**
+
+This is the opposite of Covariate Shift. We assume that P(y) can change but P(x/y) is constant and fixed. 
+
+For example, we may want to predict diagnoses given their symptoms (or other manifestations), even as the relative prevalence of diagnoses are changing over time. Label shift is the appropriate assumption here because diseases cause symptoms.
+
+**Concept Shift**
+
+Diagnostic Criteria for mental illness, job titles and soft drink preferences change over time.
+
+The distributions that gave rise to the training data and those you will encounter in the wild might differ considerably. This happened to an unfortunate startup that some of us (authors) worked with years ago. 
+
+
+They were developing a blood test for a disease that predominantly affects older men and hoped to study it using blood samples that they had collected from patients. 
+
+
+However, it is considerably more difficult to obtain blood samples from healthy men than sick patients already in the system. 
+
+
+To compensate, the startup solicited blood donations from students on a university campus to serve as healthy controls in developing their test. Then they asked whether we could help them to build a classifier for detecting the disease.
+
+**Self Driving Cars**
+
+A similar thing happened to the US Army when they first tried to detect tanks in the forest. They took aerial photographs of the forest without tanks, then drove the tanks into the forest and took another set of pictures. The classifier appeared to work perfectly. 
+
+Unfortunately, it had merely learned how to distinguish trees with shadows from trees without shadows—the first set of pictures was taken in the early morning, the second set at noon.
+
+**Non Stationery Distributions**
+
+- computational advertising model is non stationery.
+
+- We build a spam filter. It works well at detecting all spam that we have seen so far. But then the spammers wisen up and craft new messages that look unlike anything we have seen before.
+
+- We build a product recommendation system. It works throughout the winter but then continues to recommend Santa hats long after Christmas.
+
+### Correcting Shift
+
+**Empirical Risk**
+
+Let’s first reflect about what exactly is happening during model training: we iterate over features and associated labels of training data 
+``` math
+\{(\mathbf{x}_1, y_1), \ldots, (\mathbf{x}_n, y_n)\}
+```
+Minimize Loss Function :
+
+```math
+\mathop{\mathrm{minimize}}_f \frac{1}{n} \sum_{i=1}^n l(f(\mathbf{x}_i), y_i),
+```
+
+The empirical risk is an average loss over the training data to approximate the risk, which is the expectation of the loss over the entire population of data drawn from their true distribution p(x,y)
+
+**Concept Shift Correction**
+
+Concept shift is much harder to fix in a principled manner. For instance, in a situation where suddenly the problem changes from distinguishing cats from dogs to one of distinguishing white from black animals, it will be unreasonable to assume that we can do much better than just collecting new labels and training from scratch. 
+
+Fortunately, in practice, such extreme shifts are rare. Instead, what usually happens is that the task keeps on changing slowly. To make things more concrete, here are some examples:
+
+- In computational advertising, new products are launched, old products become less popular. This means that the distribution over ads and their popularity changes gradually and any click-through rate predictor needs to change gradually with it.
+
+- Traffic camera lenses degrade gradually due to environmental wear, affecting image quality progressively.
+
+- News Content changes continuously.
+
+### Types of Learning
+
+1. Batch Learning
+
+- We have access to training features which are used to build model f(x). THen we use this model to score another batch of data from the same distribution.
+
+2. Online Learning
+
+- Imagine that each (x,y) sample comes in one at a time. We come up with estimate f(xi) and then we can get output as yi.
+
+- For example, we need to predict tomorrow’s stock price, this allows us to trade based on that estimate and at the end of the day we find out whether our estimate allowed us to make a profit.
+
+3. Bandits
+
+- In most ML Problems, we have a parameterized function f which can learn unlmited parameters, like a deep learning model.
+
+- In a Bandit problem, we have a finite number of arms we can pull(a finite number of actions we can take)
+
+4. Control
+
+- In many cases the environment remembers what we did. Not necessarily in an adversarial manner but it will just remember and the response will depend on what happened before. 
+
+- For instance, a coffee boiler controller will observe different temperatures depending on whether it was heating the boiler previously.
+
+- Control Theory is used to tune hyper parameters to improve the reconstruction quality of user generated images and the diversity of generated text.
+
+5. Reinforcement Learning
+
+- In the more general case of an environment with memory, we may encounter situations where the environment is trying to cooperate with us (cooperative games, in particular for non-zero-sum games), or others where the environment will try to win.
+
+- Chess and Go are games tht were crafted to leran from the actions that they take.
+
+**Changing Algorithms Depending on the Environment**
+
+- One key distinction between the different situations above is that the same strategy that might have worked throughout in the case of a stationary environment, might not work throughout when the environment can adapt.
+
+- For instance, an arbitrage opportunity discovered by a trader is likely to disappear once he starts exploiting it. The speed and manner at which the environment changes determines to a large extent the type of algorithms that we can bring to bear.
+
+- If the environment changes slowly then we can adapt the algorithms to adapt the change sloowly and vice versa.
+
+**Why Accuracy isnt a good metric?**
+
+Among other consequences of this change of scope, we will find that accuracy is seldom the right measure. For instance, when translating predictions into actions, we will often want to take into account the potential cost sensitivity of erring in various ways. 
+ 
+If one way of misclassifying an image could be perceived as a racial sleight of hand, while misclassification to a different category would be harmless, then we might want to adjust our thresholds accordingly, accounting for societal values in designing the decision-making protocol.
+
+**How Prediction System Changes according to Feedback Loops**
+
+- Neighbourhoods with more crimes will get more police officers.
+
+- Consequently, more crimes are discovered in these neighborhoods, entering the training data available for future iterations.
+
+- In the next iteration, the updated model targets the same neighborhood even more heavily leading to yet more crimes discovered, etc.
+
+
